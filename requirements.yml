@@ -1,0 +1,7 @@
+# This file is needed to make Ansible auto-install roles.
+# To install them run the command:
+# `ansible-galaxy install -r requirements.yml`
+
+roles:
+  # the same as `ansible-galaxy role install geerlingguy.pip`
+  - name: geerlingguy.pip
