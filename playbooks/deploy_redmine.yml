@@ -1,0 +1,46 @@
+- name: Deploy Redmine application
+  hosts: all
+  become: true
+
+  tasks:
+
+    - name: Create directory for Redmine
+      file:
+        path: /opt/redmine
+        state: directory
+
+    - name: Create .env file from template
+      template:
+        src: ../.env
+        dest: /opt/redmine/.env
+        mode: '0644'
+
+    - name: Copy docker-compose.yml file
+      copy:
+        src: ../redmine-docker-compose.yml
+        dest: /opt/redmine/docker-compose.yml
+
+    - name: Validate docker-compose file
+      command: docker compose -f /opt/redmine/docker-compose.yml config
+      args:
+        chdir: /opt/redmine
+      register: validate_compose
+
+    - debug:
+        var: validate_compose
+
+    - name: Start Redmine application
+      command: docker compose -f /opt/redmine/docker-compose.yml up -d
+      args:
+        chdir: /opt/redmine
+      tags:
+        - start
+
+    - name: Confirm application is running
+      command: docker ps
+      register: running_containers
+      tags: debug
+
+    - debug:
+        msg: "{{ running_containers.stdout }}"
+      tags: debug
