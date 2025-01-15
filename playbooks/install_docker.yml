@@ -3,10 +3,10 @@
   become: true
 
   tasks:
-    - name: Install Docker and Docker Compose
+    - name: Install Docker and Docker Compose plugin
       apt:
         name:
           - docker.io
-          - docker-compose
-        state: present
+          - docker-compose-plugin
+        state: latest
         update_cache: true
