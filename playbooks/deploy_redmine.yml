@@ -11,7 +11,7 @@
 
     - name: Create .env file from template
       template:
-        src: ../.env
+        src: ../.env.example
         dest: /opt/redmine/.env
         mode: '0644'
 

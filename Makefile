@@ -16,7 +16,10 @@ install_docker:
 	ansible-playbook playbooks/install_docker.yml -i inventory.ini
 
 deploy:
-	ansible-playbook playbooks/deploy_redmine.yml -i inventory.ini
+	ansible-playbook playbooks/deploy_redmine.yml -i inventory.ini --vault-password-file vault_pass.txt
 
 start:
 	docker-compose up -d
+
+edit_vault:
+	ansible-vault edit group_vars/webservers/vault.yml
