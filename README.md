@@ -1,7 +1,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Avanera/devops-for-programmers-project-76/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Avanera/devops-for-programmers-project-76/actions)
 
-Link to the deployed application: https://secproj.ru
+## Deployed app:
+https://secproj.ru  (Digitalocean - balancer leading to 2 servers + database service)
 
 # Server configuration project using Ansible
 
@@ -15,11 +16,16 @@ Link to the deployed application: https://secproj.ru
     ```
     make set_up
     ```
+2. Create file vault_pass.txt with the ansible vault password string.
 3. Deploy Redmine to the servers:
     ```
     make deploy
     ```
-4. Start Redmine:
+4. Deploy Datadog to the servers:
+    ```
+    make deploy_datadog
+    ```
+5. Start Redmine:
     ```
     make start
     ```

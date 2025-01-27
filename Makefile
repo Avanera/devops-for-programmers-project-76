@@ -23,3 +23,6 @@ start:
 
 edit_vault:
 	ansible-vault edit group_vars/webservers/vault.yml
+
+deploy_datadog:
+	ansible-playbook playbooks/deploy_datadog.yml -i inventory.ini --vault-password-file vault_pass.txt
