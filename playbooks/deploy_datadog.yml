@@ -1,0 +1,43 @@
+
+- name: Install and configure Datadog agent
+  hosts: webservers
+  become: true
+
+  tasks:
+
+    - name: Import the Datadog Agent role from the Datadog collection
+      import_role:
+        name: datadog.dd.agent
+
+    - name: Configure http_check in Datadog
+      ansible.builtin.copy:
+        dest: "/etc/datadog-agent/conf.d/http_check.d/conf.yaml"
+        content: |
+          http_check:
+            url: "{{ dd_checks.http_check.url }}"
+            name: "Redmine Application Health"
+
+  vars:
+    datadog_api_key: "{{ dd_api_key_vaulted }}"
+    datadog_site: "{{ dd_site }}"
+    datadog_checks:
+        process:
+          init_config:
+          instances:
+            - name: ssh
+              search_string: ['ssh', 'sshd' ]
+        http:
+          init_config:
+
+          instances:
+            - name: somewebsite Login Page
+              url: https://someurl.com/dispatcher/login.jsp
+              timeout: 5
+
+              content_match: 'Login'
+              collect_response_time: true
+              skip_event: true
+
+              tags:
+                - service:somewebsite
+                - url:someurl.com

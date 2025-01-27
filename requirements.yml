@@ -4,4 +4,7 @@
 
 roles:
   # the same as `ansible-galaxy role install geerlingguy.pip`
-  - name: geerlingguy.pip
+  - role: geerlingguy.pip
+
+collections:
+  - name: datadog.dd

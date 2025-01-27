@@ -44,3 +44,7 @@
     - debug:
         msg: "{{ running_containers.stdout }}"
       tags: debug
+
+  vars:
+    datadog_api_key: "{{ dd_api_key_vaulted }}"
+    datadog_site: "{{ dd_site }}"
