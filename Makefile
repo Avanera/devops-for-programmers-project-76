@@ -1,4 +1,4 @@
-set_up: install install_docker
+set_up: install_docker install
 
 # Install the roles added to the requirements.yml file
 install:

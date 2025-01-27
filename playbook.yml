@@ -18,29 +18,15 @@
         dest: /opt/redmine/.env
         mode: '0644'
 
-    - name: Copy docker-compose.yml file
-      copy:
-        src: redmine-docker-compose.yml
-        dest: /opt/redmine/docker-compose.yml
-        mode: '0755'
-
-    - name: Register docker-compose file
-      command: docker compose -f /opt/redmine/docker-compose.yml config
-      args:
-        chdir: /opt/redmine
-      register: validate_compose
-      changed_when: false
-
-    - name: Debug docker-compose file
-      debug:
-        var: validate_compose
-
-    - name: Start Redmine application
-      community.docker.docker_compose:
-        project_src: /opt/redmine
-        state: present
-      tags:
-        - start
+    - name: Start container
+      community.docker.docker_container:
+        name: redmine_container
+        image: redmine:5.0
+        ports:
+          - 80:3000
+        env_file:
+          - .env
+        output_logs: true
 
     - name: Confirm application is running
       command: docker ps
