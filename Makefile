@@ -12,3 +12,9 @@ deploy:
 
 edit_vault:
 	ansible-vault edit group_vars/webservers/vault.yml
+
+encrypt:
+	ansible-vault encrypt group_vars/webservers/vault.yml
+
+decrypt:
+	ansible-vault decrypt group_vars/webservers/vault.yml

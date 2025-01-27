@@ -13,13 +13,13 @@
 
     - name: Create .env file from template
       template:
-        src: ../.env.example
+        src: templates/.env.j2
         dest: /opt/redmine/.env
         mode: '0644'
 
     - name: Copy docker-compose.yml file
       copy:
-        src: ../redmine-docker-compose.yml
+        src: redmine-docker-compose.yml
         dest: /opt/redmine/docker-compose.yml
 
     - name: Validate docker-compose file
@@ -48,8 +48,8 @@
       tags: debug
 
   vars:
-    datadog_api_key: "{{ dd_api_key_vaulted }}"
-    datadog_site: "{{ dd_site }}"
+    datadog_api_key: "{{ datadog_api_key }}"
+    datadog_site: "{{ datadog_site }}"
 
 - name: Install and configure Datadog agent
   hosts: webservers
@@ -66,5 +66,5 @@
         dest: "/etc/datadog-agent/conf.d/http_check.d/conf.yaml"
         content: |
           http_check:
-            url: "{{ dd_checks.http_check.url }}"
+            url: "{{ datadog_http_check_url }}"
             name: "Redmine Application Health"
