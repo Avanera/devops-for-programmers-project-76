@@ -15,11 +15,16 @@ Link to the deployed application: https://secproj.ru
     ```
     make set_up
     ```
+2. Create file vault_pass.txt with the ansible vault password string.
 3. Deploy Redmine to the servers:
     ```
     make deploy
     ```
-4. Start Redmine:
+4. Deploy Datadog to the servers:
+    ```
+    make deploy_datadog
+    ```
+5. Start Redmine:
     ```
     make start
     ```
