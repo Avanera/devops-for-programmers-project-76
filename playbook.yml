@@ -48,8 +48,8 @@
       tags: debug
 
   vars:
-    datadog_api_key: "{{ datadog_api_key }}"
-    datadog_site: "{{ datadog_site }}"
+    datadog_api_key: "{{ DATADOG_API_KEY }}"
+    datadog_site: "{{ DATADOG_SITE }}"
 
 - name: Install and configure Datadog agent
   hosts: webservers
@@ -66,5 +66,5 @@
         dest: "/etc/datadog-agent/conf.d/http_check.d/conf.yaml"
         content: |
           http_check:
-            url: "{{ datadog_http_check_url }}"
+            url: "{{ DATADOG_HTTP_CHECK_URL }}"
             name: "Redmine Application Health"
