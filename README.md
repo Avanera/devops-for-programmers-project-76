@@ -21,11 +21,3 @@ https://secproj.ru  (Digitalocean - balancer leading to 2 servers + database ser
     ```
     make deploy
     ```
-4. Deploy Datadog to the servers:
-    ```
-    make deploy_datadog
-    ```
-5. Start Redmine:
-    ```
-    make start
-    ```

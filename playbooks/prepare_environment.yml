@@ -1,5 +1,0 @@
-- name: prepare the environment
-  hosts: all
-  become: true
-  roles:
-    - geerlingguy.pip
