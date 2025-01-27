@@ -10,6 +10,7 @@
       file:
         path: /opt/redmine
         state: directory
+        mode: '0755'
 
     - name: Create .env file from template
       template:
@@ -21,29 +22,34 @@
       copy:
         src: redmine-docker-compose.yml
         dest: /opt/redmine/docker-compose.yml
+        mode: '0755'
 
-    - name: Validate docker-compose file
+    - name: Register docker-compose file
       command: docker compose -f /opt/redmine/docker-compose.yml config
       args:
         chdir: /opt/redmine
       register: validate_compose
+      changed_when: false
 
-    - debug:
+    - name: Debug docker-compose file
+      debug:
         var: validate_compose
 
     - name: Start Redmine application
-      command: docker compose -f /opt/redmine/docker-compose.yml up -d
-      args:
-        chdir: /opt/redmine
+      community.docker.docker_compose:
+        project_src: /opt/redmine
+        state: present
       tags:
         - start
 
     - name: Confirm application is running
       command: docker ps
       register: running_containers
+      changed_when: false
       tags: debug
 
-    - debug:
+    - name: Debug running containers
+      debug:
         msg: "{{ running_containers.stdout }}"
       tags: debug
 
@@ -68,3 +74,4 @@
           http_check:
             url: "{{ DATADOG_HTTP_CHECK_URL }}"
             name: "Redmine Application Health"
+        mode: '0755'
