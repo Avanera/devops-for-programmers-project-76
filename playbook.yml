@@ -5,11 +5,6 @@
     - geerlingguy.pip
 
   tasks:
-    - name: Include vault variables
-      include_vars:
-        file: group_vars/webservers/vault.yml
-        name: vault_vars
-
     - name: Create directory for Redmine
       file:
         path: /opt/redmine
