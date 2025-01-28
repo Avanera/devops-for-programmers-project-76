@@ -12,12 +12,6 @@
         state: directory
         mode: '0755'
     
-    - name: Copy vault_pass.txt to target machine
-      copy:
-        src: vault_pass.txt
-        dest: /opt/redmine/vault_pass.txt
-        mode: '0600'
-
     - name: Create .env file from template
       template:
         src: templates/.env.j2
