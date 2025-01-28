@@ -1,8 +1,6 @@
 - name: Deploy Redmine application
   hosts: all
   become: true
-  vars_files:
-    - group_vars/webservers/vault.yml
   roles:
     - geerlingguy.pip
 
