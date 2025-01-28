@@ -5,6 +5,10 @@
     - geerlingguy.pip
 
   tasks:
+    - name: Include vault variables
+      include_vars:
+        file: group_vars/webservers/vault.yml
+        name: vault_vars
 
     - name: Create directory for Redmine
       file:
@@ -15,12 +19,12 @@
     - name: Create .env file from template
       template:
         src: templates/.env.j2
-        dest: /opt/redmine/.env
+        dest: '.env'
         mode: '0644'
 
     - name: Verify .env file exists
       stat:
-        path: /opt/redmine/.env
+        path: .env
       register: env_file_check
 
     - name: Debug .env file
@@ -28,7 +32,7 @@
         msg: "File exists: {{ env_file_check.stat.exists }}"
 
     - name: Verify contents of .env file
-      ansible.builtin.command: cat /opt/redmine/.env
+      ansible.builtin.command: cat .env
       register: env_file_content
 
     - name: Debug .env contents
@@ -42,7 +46,7 @@
         ports:
           - 80:3000
         env_file:
-          - /opt/redmine/.env
+          - .env
         output_logs: true
 
     - name: Confirm application is running
