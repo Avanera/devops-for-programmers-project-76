@@ -11,12 +11,28 @@
         path: /opt/redmine
         state: directory
         mode: '0755'
+    
+    - name: Copy vault_pass.txt to target machine
+      copy:
+        src: vault_pass.txt
+        dest: /opt/redmine/vault_pass.txt
+        mode: '0600'
 
     - name: Create .env file from template
       template:
         src: templates/.env.j2
         dest: /opt/redmine/.env
         mode: '0644'
+
+    - name: Verify .env file exists
+      stat:
+        path: /opt/redmine/.env
+      register: env_file_check
+
+    - name: Debug .env file
+      debug:
+        msg: "File exists: {{ env_file_check.stat.exists }}"
+
 
     - name: Start container
       community.docker.docker_container:
