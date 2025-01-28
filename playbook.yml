@@ -37,6 +37,13 @@
       debug:
         msg: "{{ env_file_content.stdout }}"
 
+    - name: Debug vault variables
+      debug:
+        msg:
+          redmine_secret_key_base: "{{ redmine_secret_key_base }}"
+          redmine_db_database: "{{ redmine_db_database }}"
+          datadog_api_key_vaulted: "{{ datadog_api_key_vaulted }}"
+
     - name: Start container
       community.docker.docker_container:
         name: redmine_container
